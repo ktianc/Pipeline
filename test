@@ -1,4 +1,4 @@
-node {
+node("slave") {
 	stage("checkout") {
 	    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/test_project.git']]])
 	}
@@ -7,6 +7,7 @@ node {
 	    sh "mvn clean install -D maven.test.skip=true"
 	}
 	stage("deploy") {
+            //sh "mv /root/.jenkins/workspace/test_pipeline/target/abc.war /usr/local/apache-tomcat-8.5.24/webapps/abc.war"
 	    echo "deploy project......"
 	}
 }
