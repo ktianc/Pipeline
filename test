@@ -3,9 +3,9 @@ node {
 	    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/test_project.git']]])
 	}
 	stage("maven pack") {
-            dir('./test_project') {
-	        mvn clean install -D maven.test.skip=true
-            }
+        dir('./') {
+	    mvn clean install -D maven.test.skip=true
+          }
 	}
 	stage("deploy") {
 	    echo "deploy project......"
