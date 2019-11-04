@@ -7,10 +7,13 @@ node {
         }
 	stage("maven pack") {
             //echo "maven test"
-	    //sh "mvn clean install -D maven.test.skip=true"
-            sh "pwd"
+	    sh "mvn clean install -D maven.test.skip=true"
+            sh "mv ./target/*.war ../tomcat/"
 	}
 	stage("build") {
-	    echo "build......"
+	    dir("../tomcat/") {
+                sh "pwd"
+                sh "ls"
+            }
 	}
 }
