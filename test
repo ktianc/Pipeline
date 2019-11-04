@@ -1,17 +1,13 @@
 node {
-	stage("checkout_dockerfile") {
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/tomcat.git']]])
-	}
         stage("checkout_project") {
             checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/test_project.git']]])
         }
 	stage("maven pack") {
             //echo "maven test"
 	    sh "mvn clean install -D maven.test.skip=true"
-            sh "mv ./target/*.war ../tomcat/"
 	}
 	stage("build") {
-	    dir("../tomcat/") {
+	    dir("./target/") {
                 sh "pwd"
                 sh "ls"
             }
