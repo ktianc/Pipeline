@@ -1,13 +1,16 @@
-node("slave") {
-	stage("checkout") {
-	    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/test_project.git']]])
+node {
+	stage("checkout_dockerfile") {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/tomcat.git']]])
 	}
+        stage("checkout_project") {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/test_project.git']]])
+        }
 	stage("maven pack") {
             //echo "maven test"
-	    sh "mvn clean install -D maven.test.skip=true"
+	    //sh "mvn clean install -D maven.test.skip=true"
+            sh "pwd"
 	}
-	stage("deploy") {
-            sh "mv /root/workspace/test_pipeline/target/abc.war /usr/local/tomcat/webapps/abc.war"
-	    //echo "deploy project......"
+	stage("build") {
+	    echo "build......"
 	}
 }
