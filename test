@@ -4,7 +4,7 @@ node {
 	}
 	stage("maven pack") {
             dir("test_project") {
-	        /usr/local/apache-maven-3.6.2/bin/mvn clean install -D maven.test.skip=true
+	        sh /usr/local/apache-maven-3.6.2/bin/mvn clean install -D maven.test.skip=true
             }
 	}
 	stage("deploy") {
