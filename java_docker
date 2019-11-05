@@ -1,0 +1,17 @@
+node {
+        stage("checkout") {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ktianc/test_project.git']]])
+        }
+	stage("maven pack") {
+            //echo "maven test"
+	    sh "mvn clean install -D maven.test.skip=true"
+	}
+	stage("build") {
+	    dir("./target/") {
+                sh "wget http://www.ktianc.top/pag/dockerfile/tomcat/dockerfile"
+                sh "wget http://www.ktianc.top/pag/dockerfile/tomcat/server.xml"
+                sh "docker build -t www.ktianc.top/library/tomcat:abc.11.04 ."
+                sh "docker push www.ktianc.top/library/tomcat:abc.11.04"
+            }
+	}
+}
