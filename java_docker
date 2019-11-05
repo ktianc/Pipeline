@@ -15,3 +15,11 @@ node {
             }
 	}
 }
+node("slave") {
+    stage("Deploy") {
+        sh "docker pull www.ktianc.top/library/tomcat:abc.11.04"
+    }
+    stage("Start") {
+        sh "docker run --privileged=true --name tomcat -p 8080:8080 -d www.ktianc.top/library/tomcat:abc.11.04"
+    }
+}
